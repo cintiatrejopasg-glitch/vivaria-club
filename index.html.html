@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIVARIA — Club Estudiantil de Fotografía</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Fraunces', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        // Paleta editorial artística (Editorial Paper, Sage Forest, Terracotta Ochre, Warm Charcoal)
+                        paper: '#FAF6EF',
+                        sand: '#EFE6D5',
+                        terracotta: '#C85A32',
+                        terracottaDark: '#A34220',
+                        sage: '#2B5948',
+                        sageLight: '#E3EDE9',
+                        amberGold: '#D99B26',
+                        charcoal: '#1A1C1A',
+                        slateDark: '#262A27',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Textura sutil de grano fotográfico analógico */
+        body {
+            background-color: #FAF6EF;
+            color: #1A1C1A;
+            background-image: radial-gradient(rgba(43, 89, 72, 0.06) 1px, transparent 0);
+            background-size: 28px 28px;
+        }
+        /* Estilo para ocultar barras de desplazamiento en el carrusel de filtros */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Efecto espejo para cámara frontal */
+        .mirror-mode {
+            transform: scaleX(-1);
+        }
+        /* Animación de destello al tomar foto */
+        @keyframes shutterFlash {
+            0% { opacity: 0.95; }
+            100% { opacity: 0; }
+        }
+        .flash-active {
+            animation: shutterFlash 0.4s ease-out forwards;
+        }
+        /* Viñeta sutil para enfoque */
+        .vignette-overlay {
+            background: radial-gradient(circle, rgba(0,0,0,0) 58%, rgba(0,0,0,0.45) 100%);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-terracotta selection:text-paper">
+
+    <!-- Barra de Navegación Flotante y Editorial -->
+    <header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-charcoal/10 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sage to-charcoal text-paper flex items-center justify-center shadow-md group-hover:rotate-6 transition-transform">
+                    <i data-lucide="aperture" class="w-5 h-5 text-amberGold"></i>
+                </div>
+                <div>
+                    <span class="font-serif font-bold text-xl sm:text-2xl tracking-tight text-charcoal block leading-none">VIVARIA</span>
+                    <span class="text-[10px] uppercase tracking-[0.22em] text-terracotta font-bold">Club de Fotografía</span>
+                </div>
+            </a>
+
+            <!-- Navegación Escritorio -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-charcoal/80">
+                <a href="#nosotros" class="hover:text-terracotta transition-colors">Nosotros</a>
+                <a href="#esencia" class="hover:text-terracotta transition-colors">Misión y Valores</a>
+                <a href="#que-hacemos" class="hover:text-terracotta transition-colors">Qué Hacemos</a>
+                <a href="#galeria" class="hover:text-terracotta transition-colors">Galería</a>
+                <a href="#actividades" class="hover:text-terracotta transition-colors">Actividades</a>
+            </nav>
+
+            <!-- Botón Directo a la Cámara -->
+            <a href="#camara-vivaria" class="inline-flex items-center gap-2 bg-gradient-to-r from-terracotta to-terracottaDark hover:brightness-110 text-paper text-xs sm:text-sm font-bold px-4 sm:px-5 py-2.5 rounded-full shadow-md transition-all active:scale-95">
+                <i data-lucide="camera" class="w-4 h-4"></i>
+                <span>Estudio Cámara</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Sección Hero Llamativa con Collage Visual -->
+    <section class="relative overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-24 px-4 sm:px-6">
+        <!-- Acentos de fondo artísticos -->
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-amberGold/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-32 -left-24 w-80 h-80 bg-sage/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
+            <!-- Columna de Texto -->
+            <div class="lg:col-span-7 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sageLight text-sage text-xs sm:text-sm font-bold tracking-wide mb-6 border border-sage/20 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-terracotta animate-ping"></span>
+                    <span>Vemos. Vivimos. Recordamos.</span>
+                </div>
+                
+                <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-charcoal tracking-tight leading-[1.05] mb-6">
+                    VIVARIA <br>
+                    <span class="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-terracotta via-amberGold to-sage text-3xl sm:text-5xl block mt-2">
+                        Transforma imágenes en historias.
+                    </span>
+                </h1>
+                
+                <p class="text-base sm:text-lg text-charcoal/80 leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
+                    Bienvenidos a <strong>Vivaria</strong>, un club estudiantil dedicado a la fotografía, la creatividad y la expresión visual. Descubre el mundo a través de una cámara, captura momentos especiales y aprende a transformar imágenes en historias. Cada fotografía es una forma diferente de ver el mundo.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#camara-vivaria" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-charcoal hover:bg-sage text-paper font-bold px-7 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-amberGold"></i>
+                        <span>Probar Cámara con Filtros</span>
+                    </a>
+                    <a href="#galeria" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-sand/90 hover:bg-sand text-charcoal font-bold px-7 py-4 rounded-2xl border border-charcoal/15 transition-all">
+                        <i data-lucide="images" class="w-5 h-5 text-terracotta"></i>
+                        <span>Explorar Galería</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Collage Fotográfico Hero con paisajes similares a tus fotos -->
+            <div class="lg:col-span-5 relative">
+                <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="space-y-4 animate-float">
+                        <div class="p-2.5 bg-white rounded-3xl shadow-xl border border-charcoal/10 -rotate-2">
+                            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x600/2B5948/FAF6EF?text=Horizonte+y+Nubes'" alt="Montañas verdes bajo cielo azul con nubes" class="w-full h-44 sm:h-52 object-cover rounded-2xl">
+                            <p class="text-[11px] font-serif italic text-charcoal/70 mt-2 px-1">Horizonte y nubes</p>
+                        </div>
+                        <div class="bg-sage text-paper p-4 rounded-3xl shadow-lg rotate-1">
+                            <p class="font-serif italic text-sm">“No necesitas cámara profesional, solo ganas de mirar distinto.”</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-6 animate-float-delayed">
+                        <div class="p-2.5 bg-white rounded-3xl shadow-xl border border-charcoal/10 rotate-2">
+                            <img src="https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x900/C85A32/FAF6EF?text=Rayos+al+Atardecer'" alt="Rayos de luz solar entre nubes dramáticas" class="w-full h-56 sm:h-64 object-cover rounded-2xl">
+                            <p class="text-[11px] font-serif italic text-charcoal/70 mt-2 px-1">Rayos al atardecer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Sección: Nuestra Galería (Con fotografías de paisajes, atardeceres y rayos de luz) -->
+    <section id="galeria" class="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="max-w-2xl">
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">Miradas Estudiantiles</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-charcoal mt-2 mb-4">Nuestra galería</h2>
+                <p class="text-charcoal/80 leading-relaxed">
+                    Cada fotografía representa una mirada diferente. En esta sección compartimos las imágenes capturadas por los integrantes de Vivaria, mostrando lugares, momentos, detalles y experiencias que merecen ser recordadas.
+                </p>
+            </div>
+            <p class="text-sm font-bold text-sage italic bg-sageLight px-5 py-3 rounded-2xl border border-sage/20 shrink-0">
+                Haz clic en cualquier foto para ver su historia.
+            </p>
+        </div>
+
+        <!-- Cuadrícula Fotográfica Editorial -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Fotografía 1: Montañas verdes y nubes blancas sobre cielo azul -->
+            <figure onclick="openLightbox('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=85', 'Cumbres y Cielo Abierto', 'Perspectiva natural capturando la inmensidad de las nubes blancas sobre las montañas verdes.')" class="group cursor-pointer relative overflow-hidden rounded-3xl bg-white p-3 shadow-lg border border-charcoal/10 hover:shadow-2xl transition-all">
+                <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-sand">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=80" 
+                         onerror="this.src='https://placehold.co/1000x750/2B5948/FAF6EF?text=Cumbres+y+Cielo+Abierto'"
+                         alt="Montañas verdes bajo un cielo azul con grandes nubes blancas" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-paper">
+                        <span class="text-xs uppercase tracking-widest text-amberGold font-bold">Paisaje Natural</span>
+                        <h3 class="font-serif text-2xl font-bold">Cumbres y Cielo Abierto</h3>
+                        <p class="text-sm text-paper/85 mt-1">Perspectiva natural capturando la inmensidad de las nubes sobre las montañas.</p>
+                    </div>
+                </div>
+                <figcaption class="pt-3 px-2 flex items-center justify-between">
+                    <div>
+                        <span class="font-serif font-bold text-charcoal text-lg">Cumbres y Cielo Abierto</span>
+                        <p class="text-xs text-charcoal/65">Archivo Vivaria • Paisaje</p>
+                    </div>
+                    <span class="w-9 h-9 rounded-full bg-sand flex items-center justify-center text-charcoal group-hover:bg-terracotta group-hover:text-paper transition-colors">
+                        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    </span>
+                </figcaption>
+            </figure>
+
+            <!-- Fotografía 2: Plaza y arquitectura al atardecer con cielo dorado -->
+            <figure onclick="openLightbox('https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1200&q=85', 'Atardecer en la Plaza', 'Luz dorada y tonos cálidos envolviendo la arquitectura y la vida cotidiana al caer la tarde.')" class="group cursor-pointer relative overflow-hidden rounded-3xl bg-white p-3 shadow-lg border border-charcoal/10 hover:shadow-2xl transition-all">
+                <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-sand">
+                    <img src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1000&q=80" 
+                         onerror="this.src='https://placehold.co/1000x750/C85A32/FAF6EF?text=Atardecer+en+la+Plaza'"
+                         alt="Plaza pública y arcos arquitectónicos al atardecer con cielo dorado" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-paper">
+                        <span class="text-xs uppercase tracking-widest text-amberGold font-bold">Hora Dorada & Entorno</span>
+                        <h3 class="font-serif text-2xl font-bold">Atardecer en la Plaza</h3>
+                        <p class="text-sm text-paper/85 mt-1">Luz dorada envolviendo la arquitectura y la vida cotidiana al caer la tarde.</p>
+                    </div>
+                </div>
+                <figcaption class="pt-3 px-2 flex items-center justify-between">
+                    <div>
+                        <span class="font-serif font-bold text-charcoal text-lg">Atardecer en la Plaza</span>
+                        <p class="text-xs text-charcoal/65">Archivo Vivaria • Arquitectura y Luz</p>
+                    </div>
+                    <span class="w-9 h-9 rounded-full bg-sand flex items-center justify-center text-charcoal group-hover:bg-terracotta group-hover:text-paper transition-colors">
+                        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    </span>
+                </figcaption>
+            </figure>
+
+            <!-- Fotografía 3: Rayos crepusculares atravesando nubes densas -->
+            <figure onclick="openLightbox('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1200&q=85', 'Destellos entre Nubes', 'Contraluz dramático donde los rayos del sol atraviesan las nubes sobre el horizonte.')" class="group cursor-pointer relative overflow-hidden rounded-3xl bg-white p-3 shadow-lg border border-charcoal/10 hover:shadow-2xl transition-all">
+                <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-sand">
+                    <img src="https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1000&q=80" 
+                         onerror="this.src='https://placehold.co/1000x750/D99B26/1A1C1A?text=Destellos+entre+Nubes'"
+                         alt="Rayos de sol crepusculares atravesando nubes densas" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-paper">
+                        <span class="text-xs uppercase tracking-widest text-amberGold font-bold">Contraluz & Atmósfera</span>
+                        <h3 class="font-serif text-2xl font-bold">Destellos entre Nubes</h3>
+                        <p class="text-sm text-paper/85 mt-1">Rayos de luz solar abriéndose paso entre las nubes al final del día.</p>
+                    </div>
+                </div>
+                <figcaption class="pt-3 px-2 flex items-center justify-between">
+                    <div>
+                        <span class="font-serif font-bold text-charcoal text-lg">Destellos entre Nubes</span>
+                        <p class="text-xs text-charcoal/65">Archivo Vivaria • Iluminación Natural</p>
+                    </div>
+                    <span class="w-9 h-9 rounded-full bg-sand flex items-center justify-center text-charcoal group-hover:bg-terracotta group-hover:text-paper transition-colors">
+                        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    </span>
+                </figcaption>
+            </figure>
+
+            <!-- Fotografía 4: Horizonte dorado y líneas en perspectiva -->
+            <figure onclick="openLightbox('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85', 'Líneas y Horizonte', 'Composición con líneas en primer plano contrastando con la fuerza de la luz dorada en el cielo.')" class="group cursor-pointer relative overflow-hidden rounded-3xl bg-white p-3 shadow-lg border border-charcoal/10 hover:shadow-2xl transition-all">
+                <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-sand">
+                    <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1000&q=80" 
+                         onerror="this.src='https://placehold.co/1000x750/262A27/FAF6EF?text=Lineas+y+Horizonte'"
+                         alt="Composición de horizonte iluminado al atardecer con campo verde" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-paper">
+                        <span class="text-xs uppercase tracking-widest text-amberGold font-bold">Composición & Perspectiva</span>
+                        <h3 class="font-serif text-2xl font-bold">Líneas y Horizonte</h3>
+                        <p class="text-sm text-paper/85 mt-1">Juego de perspectiva urbana y resplandor natural en un mismo encuadre.</p>
+                    </div>
+                </div>
+                <figcaption class="pt-3 px-2 flex items-center justify-between">
+                    <div>
+                        <span class="font-serif font-bold text-charcoal text-lg">Líneas y Horizonte</span>
+                        <p class="text-xs text-charcoal/65">Archivo Vivaria • Perspectiva</p>
+                    </div>
+                    <span class="w-9 h-9 rounded-full bg-sand flex items-center justify-center text-charcoal group-hover:bg-terracotta group-hover:text-paper transition-colors">
+                        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    </span>
+                </figcaption>
+            </figure>
+        </div>
+
+        <!-- Opción extra: Probar cualquiera de las 4 fotos en el Estudio de Filtros -->
+        <div class="mt-8 bg-sand/90 border border-charcoal/10 rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-terracotta/15 text-terracotta flex items-center justify-center shrink-0">
+                    <i data-lucide="wand-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold text-charcoal text-base">¿Quieres probar los filtros con estas fotos?</h4>
+                    <p class="text-xs text-charcoal/75">Envía cualquier fotografía de nuestra galería directamente a la cámara de abajo.</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="loadGalleryPhotoInStudio('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=80', 'paisajes')" class="text-xs font-bold px-3.5 py-2 rounded-xl bg-paper hover:bg-terracotta hover:text-paper text-charcoal border border-charcoal/15 transition-colors">Foto 1: Cumbres</button>
+                <button type="button" onclick="loadGalleryPhotoInStudio('https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1000&q=80', 'paisajes')" class="text-xs font-bold px-3.5 py-2 rounded-xl bg-paper hover:bg-terracotta hover:text-paper text-charcoal border border-charcoal/15 transition-colors">Foto 2: Plaza</button>
+                <button type="button" onclick="loadGalleryPhotoInStudio('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1000&q=80', 'paisajes')" class="text-xs font-bold px-3.5 py-2 rounded-xl bg-paper hover:bg-terracotta hover:text-paper text-charcoal border border-charcoal/15 transition-colors">Foto 3: Rayos</button>
+                <button type="button" onclick="loadGalleryPhotoInStudio('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1000&q=80', 'objetos')" class="text-xs font-bold px-3.5 py-2 rounded-xl bg-paper hover:bg-terracotta hover:text-paper text-charcoal border border-charcoal/15 transition-colors">Foto 4: Horizonte</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Misión, Visión y Valores -->
+    <section id="esencia" class="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">Nuestra Identidad</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-charcoal mt-2">Lo que guía cada disparo</h2>
+        </div>
+
+        <!-- Misión y Visión -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div class="bg-white p-8 rounded-3xl border-l-8 border-terracotta shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-charcoal">Nuestra misión</h3>
+                </div>
+                <p class="text-charcoal/85 leading-relaxed">
+                    Crear un espacio estudiantil donde podamos aprender fotografía, convivir, desarrollar nuestra creatividad y expresar nuestras ideas y emociones a través de imágenes.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl border-l-8 border-sage shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2.5 rounded-xl bg-sage/10 text-sage">
+                        <i data-lucide="sun" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-charcoal">Nuestra visión</h3>
+                </div>
+                <p class="text-charcoal/85 leading-relaxed">
+                    Ser un club reconocido dentro de nuestra institución por su creatividad, participación y capacidad de mostrar la vida escolar a través de la fotografía.
+                </p>
+            </div>
+        </div>
+
+        <!-- Nuestros Valores -->
+        <div class="bg-sand/80 p-8 sm:p-10 rounded-3xl border border-charcoal/10 shadow-sm">
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal mb-6 text-center">Nuestros valores</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="bg-paper p-5 rounded-2xl border border-charcoal/10 hover:-translate-y-1 transition-transform">
+                    <div class="w-10 h-10 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center mb-3">
+                        <i data-lucide="handshake" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold text-charcoal mb-1">Cooperación</h4>
+                    <p class="text-sm text-charcoal/75">Trabajar juntos y apoyarnos en nuestros proyectos.</p>
+                </div>
+
+                <div class="bg-paper p-5 rounded-2xl border border-charcoal/10 hover:-translate-y-1 transition-transform">
+                    <div class="w-10 h-10 rounded-xl bg-sage/15 text-sage flex items-center justify-center mb-3">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold text-charcoal mb-1">Respeto</h4>
+                    <p class="text-sm text-charcoal/75">Valorar las ideas, fotografías y opiniones de los demás.</p>
+                </div>
+
+                <div class="bg-paper p-5 rounded-2xl border border-charcoal/10 hover:-translate-y-1 transition-transform">
+                    <div class="w-10 h-10 rounded-xl bg-amberGold/20 text-amberGold flex items-center justify-center mb-3">
+                        <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold text-charcoal mb-1">Creatividad</h4>
+                    <p class="text-sm text-charcoal/75">Buscar nuevas formas de capturar y representar nuestro entorno.</p>
+                </div>
+
+                <div class="bg-paper p-5 rounded-2xl border border-charcoal/10 hover:-translate-y-1 transition-transform">
+                    <div class="w-10 h-10 rounded-xl bg-sage/15 text-sage flex items-center justify-center mb-3">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold text-charcoal mb-1">Aprendizaje</h4>
+                    <p class="text-sm text-charcoal/75">Desarrollar habilidades y conocimientos fotográficos.</p>
+                </div>
+
+                <div class="bg-paper p-5 rounded-2xl border border-charcoal/10 sm:col-span-2 lg:col-span-1 hover:-translate-y-1 transition-transform">
+                    <div class="w-10 h-10 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center mb-3">
+                        <i data-lucide="feather" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold text-charcoal mb-1">Expresión</h4>
+                    <p class="text-sm text-charcoal/75">Comunicar sentimientos, pensamientos e historias mediante imágenes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: ¿Qué hacemos? -->
+    <section id="que-hacemos" class="py-16 sm:py-24 px-4 sm:px-6 bg-charcoal text-paper relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[40rem] h-40 bg-terracotta/10 blur-3xl pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="max-w-2xl mb-12">
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-amberGold">Experiencia Práctica</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold mt-2 mb-4">¿Qué hacemos?</h2>
+                <p class="text-paper/80 text-base sm:text-lg">
+                    En Vivaria realizamos actividades que nos permiten aprender, practicar y compartir nuestro interés por la fotografía.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-slateDark p-6 rounded-3xl border border-paper/10 hover:border-amberGold/60 transition-all hover:-translate-y-1">
+                    <div class="w-11 h-11 rounded-2xl bg-terracotta/25 text-terracotta flex items-center justify-center mb-4">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2">Talleres fotográficos</h3>
+                    <p class="text-paper/75 text-sm leading-relaxed">Aprendemos técnicas básicas y avanzadas de fotografía.</p>
+                </div>
+
+                <div class="bg-slateDark p-6 rounded-3xl border border-paper/10 hover:border-amberGold/60 transition-all hover:-translate-y-1">
+                    <div class="w-11 h-11 rounded-2xl bg-amberGold/25 text-amberGold flex items-center justify-center mb-4">
+                        <i data-lucide="focus" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2">Prácticas</h3>
+                    <p class="text-paper/75 text-sm leading-relaxed">Experimentamos con paisajes, retratos, objetos, iluminación y perspectiva.</p>
+                </div>
+
+                <div class="bg-slateDark p-6 rounded-3xl border border-paper/10 hover:border-amberGold/60 transition-all hover:-translate-y-1">
+                    <div class="w-11 h-11 rounded-2xl bg-sage/40 text-emerald-300 flex items-center justify-center mb-4">
+                        <i data-lucide="trophy" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2">Retos fotográficos</h3>
+                    <p class="text-paper/75 text-sm leading-relaxed">Participamos en desafíos creativos con diferentes temas.</p>
+                </div>
+
+                <div class="bg-slateDark p-6 rounded-3xl border border-paper/10 hover:border-amberGold/60 transition-all hover:-translate-y-1">
+                    <div class="w-11 h-11 rounded-2xl bg-terracotta/25 text-terracotta flex items-center justify-center mb-4">
+                        <i data-lucide="sliders" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2">Edición digital</h3>
+                    <p class="text-paper/75 text-sm leading-relaxed">Utilizamos aplicaciones gratuitas para mejorar nuestras fotografías.</p>
+                </div>
+
+                <div class="bg-slateDark p-6 rounded-3xl border border-paper/10 hover:border-amberGold/60 transition-all hover:-translate-y-1">
+                    <div class="w-11 h-11 rounded-2xl bg-amberGold/25 text-amberGold flex items-center justify-center mb-4">
+                        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2">Cobertura de eventos</h3>
+                    <p class="text-paper/75 text-sm leading-relaxed">Capturamos actividades y momentos importantes de nuestra institución.</p>
+                </div>
+
+                <div class="bg-slateDark p-6 rounded-3xl border border-paper/10 hover:border-amberGold/60 transition-all hover:-translate-y-1">
+                    <div class="w-11 h-11 rounded-2xl bg-sage/40 text-emerald-300 flex items-center justify-center mb-4">
+                        <i data-lucide="frame" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2">Exposiciones</h3>
+                    <p class="text-paper/75 text-sm leading-relaxed">Compartimos nuestras fotografías con la comunidad estudiantil.</p>
+                </div>
+
+                <div class="bg-gradient-to-r from-slateDark to-sage/40 p-6 rounded-3xl border border-paper/15 hover:border-amberGold/60 transition-all sm:col-span-2 lg:col-span-3 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-terracotta text-paper flex items-center justify-center shrink-0 shadow-md">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold mb-1">Proyectos en equipo</h3>
+                        <p class="text-paper/85 text-sm leading-relaxed">Creamos proyectos que nos permiten colaborar y desarrollar nuevas ideas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Actividades y ¿Por qué existe Vivaria? -->
+    <section id="actividades" class="py-16 sm:py-24 px-4 sm:px-6 bg-sand/70 border-y border-charcoal/10">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <!-- Columna Actividades -->
+            <div class="lg:col-span-5">
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">Dinámica del Club</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal mt-2 mb-6">Actividades</h2>
+                <div class="space-y-4 mb-6">
+                    <div class="flex items-center gap-4 bg-paper p-4 rounded-2xl border border-charcoal/10 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-sage text-paper flex items-center justify-center shrink-0">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-charcoal">Formación grupal</span>
+                    </div>
+                    <div class="flex items-center gap-4 bg-paper p-4 rounded-2xl border border-charcoal/10 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-terracotta text-paper flex items-center justify-center shrink-0">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-charcoal">Salida fotográfica recreativa</span>
+                    </div>
+                    <div class="flex items-center gap-4 bg-paper p-4 rounded-2xl border border-charcoal/10 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-amberGold text-charcoal flex items-center justify-center shrink-0">
+                            <i data-lucide="image" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-charcoal">Exposición de fotografías significativas</span>
+                    </div>
+                    <div class="flex items-center gap-4 bg-paper p-4 rounded-2xl border border-charcoal/10 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-charcoal text-paper flex items-center justify-center shrink-0">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-charcoal">Proyecto en equipos</span>
+                    </div>
+                </div>
+                <p class="text-sm text-charcoal/80 leading-relaxed italic">
+                    Estas actividades nos permiten aprender, convivir, practicar y compartir nuestra pasión por la fotografía.
+                </p>
+            </div>
+
+            <!-- Columna ¿Por qué existe Vivaria? -->
+            <div id="nosotros" class="lg:col-span-7 bg-paper p-8 sm:p-10 rounded-3xl border border-charcoal/10 shadow-sm flex flex-col justify-center">
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-sage">Propósito y Comunidad</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal mt-2 mb-6">¿Por qué existe Vivaria?</h2>
+                <div class="space-y-4 text-charcoal/85 leading-relaxed">
+                    <p>
+                        Vivaria surge de la idea de crear un espacio dedicado a las artes visuales dentro de nuestra institución educativa, donde los estudiantes puedan desarrollar sus habilidades, compartir sus intereses y aprender algo nuevo.
+                    </p>
+                    <p>
+                        Creemos que la fotografía es una herramienta que nos permite expresarnos, observar nuestro entorno con mayor atención y descubrir la belleza en los pequeños detalles.
+                    </p>
+                    <p>
+                        Nuestro club busca fomentar la creatividad, el trabajo en equipo, la convivencia y el aprendizaje, demostrando que no es necesario contar con equipos profesionales para crear fotografías significativas.
+                    </p>
+                    <p class="font-medium text-charcoal">
+                        Queremos que cada integrante encuentre en Vivaria un lugar donde pueda aprender, participar y compartir su propia forma de ver el mundo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: ¡Forma parte de Vivaria! -->
+    <section class="py-16 sm:py-24 px-4 sm:px-6 max-w-5xl mx-auto">
+        <div class="bg-gradient-to-br from-terracotta via-terracottaDark to-charcoal text-paper rounded-[2.5rem] p-8 sm:p-14 shadow-2xl relative overflow-hidden text-center">
+            <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-amberGold/20 blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-sage/30 blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-paper/15 text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-sm">
+                    Convocatoria Abierta
+                </span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold mb-6">¡Forma parte de Vivaria!</h2>
+                
+                <div class="space-y-2 text-lg sm:text-xl font-medium text-paper/95 mb-6">
+                    <p>¿Te gusta tomar fotografías?</p>
+                    <p>¿Te interesa aprender a utilizar tu celular para capturar momentos increíbles?</p>
+                    <p>¿Te gustaría compartir tu creatividad con otros estudiantes?</p>
+                </div>
+
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-amberGold mb-4">¡Vivaria es para ti!</p>
+                
+                <p class="text-paper/90 leading-relaxed mb-8">
+                    No necesitas experiencia, conocimientos previos ni una cámara profesional. Solo necesitas interés, imaginación y ganas de aprender. Ven, descubre nuevas perspectivas y comienza a contar tus propias historias a través de la fotografía.
+                </p>
+
+                <a href="#camara-vivaria" class="inline-flex items-center gap-2.5 bg-paper text-charcoal hover:bg-sand font-bold px-8 py-4 rounded-2xl shadow-xl transition-transform active:scale-95">
+                    <i data-lucide="camera" class="w-5 h-5 text-terracotta"></i>
+                    <span>Capturar mi primera foto ahora</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECCIÓN FINAL: ESTUDIO DE CÁMARA INTERACTIVA CON MODOS Y FILTROS      -->
+    <!-- ===================================================================== -->
+    <section id="camara-vivaria" class="py-16 sm:py-24 px-4 sm:px-6 bg-charcoal text-paper border-t border-paper/10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amberGold/20 text-amberGold text-xs font-bold uppercase tracking-widest mb-3">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>Estudio Fotográfico Vivaria</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold mb-3">Cámara con Filtros y Efectos</h2>
+                <p class="text-paper/75 text-sm sm:text-base">
+                    Tómate una selfie o retrato, captura un paisaje o fotografía objetos con filtros creativos estilo Instagram, Snapchat y TikTok.
+                </p>
+            </div>
+
+            <!-- Selector de Modo de Escena: Personas / Paisajes / Objetos -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6">
+                <button type="button" onclick="setSceneMode('personas')" id="mode-personas" class="scene-btn flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-terracotta text-paper shadow-md transition-all">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>Personas y Selfies</span>
+                </button>
+                <button type="button" onclick="setSceneMode('paisajes')" id="mode-paisajes" class="scene-btn flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-slateDark text-paper/80 hover:bg-paper/15 transition-all">
+                    <i data-lucide="mountain" class="w-4 h-4"></i>
+                    <span>Paisajes y Cielos</span>
+                </button>
+                <button type="button" onclick="setSceneMode('objetos')" id="mode-objetos" class="scene-btn flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-slateDark text-paper/80 hover:bg-paper/15 transition-all">
+                    <i data-lucide="package" class="w-4 h-4"></i>
+                    <span>Objetos y Detalles</span>
+                </button>
+            </div>
+
+            <!-- Contenedor Principal de la Cámara -->
+            <div class="bg-slateDark rounded-[2rem] p-4 sm:p-6 border border-paper/15 shadow-2xl">
+                
+                <!-- Barra Superior de Controles Rápidos -->
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-4 border-b border-paper/10">
+                    <div class="flex items-center gap-2">
+                        <span id="camera-status-dot" class="w-2.5 h-2.5 rounded-full bg-amberGold"></span>
+                        <span id="camera-status-text" class="text-xs font-semibold text-paper/85">Modo: Personas y Selfies • Listo para activar</span>
+                        <span id="https-badge" class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                            <i data-lucide="lock" class="w-3 h-3"></i>
+                            <span id="https-badge-text">HTTPS Seguro</span>
+                        </span>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <!-- Temporizador 3s para selfies cómodas -->
+                        <button type="button" id="btn-timer" onclick="toggleTimer()" class="inline-flex items-center gap-1.5 text-xs font-semibold bg-paper/10 hover:bg-paper/20 text-paper px-3 py-2 rounded-xl transition-colors" title="Temporizador 3 segundos">
+                            <i data-lucide="timer" class="w-4 h-4"></i>
+                            <span id="timer-label">3s: Off</span>
+                        </button>
+
+                        <!-- Cuadrícula de Tercios -->
+                        <button type="button" id="btn-grid" onclick="toggleGrid()" class="inline-flex items-center gap-1.5 text-xs font-semibold bg-paper/10 hover:bg-paper/20 text-paper px-3 py-2 rounded-xl transition-colors" title="Cuadrícula de composición">
+                            <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Cuadrícula</span>
+                        </button>
+
+                        <!-- Cambiar Cámara Frontal / Trasera -->
+                        <button type="button" id="btn-switch-cam" onclick="switchCamera()" class="inline-flex items-center gap-1.5 text-xs font-semibold bg-paper/10 hover:bg-paper/20 text-paper px-3 py-2 rounded-xl transition-colors" title="Alternar cámara frontal o trasera">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Voltear</span>
+                        </button>
+
+                        <!-- Subir Foto desde el dispositivo -->
+                        <label class="inline-flex items-center gap-1.5 text-xs font-semibold bg-paper/10 hover:bg-paper/20 text-paper px-3 py-2 rounded-xl cursor-pointer transition-colors">
+                            <i data-lucide="upload" class="w-4 h-4"></i>
+                            <span>Subir Foto</span>
+                            <input type="file" id="upload-fallback" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Visor de Cámara / Imagen -->
+                <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-charcoal rounded-2xl overflow-hidden flex items-center justify-center border border-paper/10">
+                    
+                    <!-- Pantalla Inicial antes de encender la cámara -->
+                    <div id="camera-placeholder" class="text-center p-6 max-w-md z-10">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-terracotta to-amberGold text-paper flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i data-lucide="camera" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-2">Tu lente está listo</h3>
+                        <p id="mode-helper-text" class="text-paper/75 text-sm mb-6">
+                            Ideal para selfies y retratos con luz suave. Activa tu cámara para probar los filtros creativos.
+                        </p>
+                        <button type="button" onclick="startCamera()" class="inline-flex items-center gap-2 bg-terracotta hover:bg-terracottaDark text-paper font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all active:scale-95">
+                            <i data-lucide="video" class="w-5 h-5"></i>
+                            <span>Encender Cámara</span>
+                        </button>
+                    </div>
+
+                    <!-- Mensaje de Error / Permisos -->
+                    <div id="camera-error-box" class="hidden text-center p-6 max-w-md z-10">
+                        <div class="w-14 h-14 rounded-full bg-amberGold/20 text-amberGold flex items-center justify-center mx-auto mb-3">
+                            <i data-lucide="alert-circle" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold mb-2">No se pudo acceder a la cámara</h3>
+                        <p id="camera-error-msg" class="text-paper/75 text-sm mb-5">
+                            Verifica los permisos de cámara en tu navegador o sube una fotografía desde tu dispositivo para aplicarle filtros.
+                        </p>
+                        <label class="inline-flex items-center gap-2 bg-sage hover:bg-sage/80 text-paper font-bold px-5 py-3 rounded-xl cursor-pointer transition-colors">
+                            <i data-lucide="image-plus" class="w-4 h-4"></i>
+                            <span>Elegir imagen de mi galería</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                        </label>
+                    </div>
+
+                    <!-- Video en Vivo -->
+                    <video id="video-feed" autoplay playsinline muted class="hidden w-full h-full object-cover mirror-mode"></video>
+
+                    <!-- Imagen Subida (si se usa modo archivo o desde galería) -->
+                    <img id="uploaded-preview" crossorigin="anonymous" alt="Vista previa subida" class="hidden w-full h-full object-contain">
+
+                    <!-- Capa de Efectos Visuales en Vivo (Guías de Encuadre) -->
+                    <div id="live-overlay-layer" class="hidden absolute inset-0 pointer-events-none">
+                        <!-- Guía de Encuadre según Modo -->
+                        <div id="overlay-guide" class="w-full h-full flex items-center justify-center">
+                            <div id="guide-portrait" class="w-44 h-60 sm:w-56 sm:h-72 rounded-full border border-dashed border-paper/25"></div>
+                            <div id="guide-object" class="hidden w-44 h-44 sm:w-56 sm:h-56 rounded-3xl border border-amberGold/35"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cuenta Regresiva del Temporizador -->
+                    <div id="countdown-overlay" class="hidden absolute inset-0 bg-charcoal/40 backdrop-blur-[2px] flex items-center justify-center pointer-events-none z-20">
+                        <span id="countdown-number" class="font-serif text-7xl sm:text-8xl font-bold text-paper drop-shadow-lg">3</span>
+                    </div>
+
+                    <!-- Cuadrícula de Regla de Tercios -->
+                    <div id="composition-grid" class="hidden absolute inset-0 pointer-events-none grid grid-cols-3 grid-rows-3">
+                        <div class="border-r border-b border-paper/30"></div>
+                        <div class="border-r border-b border-paper/30"></div>
+                        <div class="border-b border-paper/30"></div>
+                        <div class="border-r border-b border-paper/30"></div>
+                        <div class="border-r border-b border-paper/30"></div>
+                        <div class="border-b border-paper/30"></div>
+                        <div class="border-r border-paper/30"></div>
+                        <div class="border-r border-paper/30"></div>
+                        <div></div>
+                    </div>
+
+                    <!-- Etiqueta del Filtro Activo -->
+                    <div id="active-filter-badge" class="hidden absolute top-3 left-3 bg-charcoal/75 backdrop-blur-md text-paper text-xs font-bold px-3.5 py-1.5 rounded-full border border-paper/15 flex items-center gap-1.5">
+                        <i data-lucide="wand-2" class="w-3.5 h-3.5 text-amberGold"></i>
+                        <span id="active-filter-name">Natural</span>
+                    </div>
+
+                    <!-- Destello de Obturador -->
+                    <div id="shutter-flash" class="pointer-events-none absolute inset-0 bg-white opacity-0 z-30"></div>
+                </div>
+
+                <!-- Selector de los 7 Filtros Originales -->
+                <div class="mt-5">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <span class="text-xs uppercase tracking-wider text-paper/65 font-bold">Filtros Fotográficos</span>
+                        <span id="filter-hint" class="text-xs text-amberGold font-medium">Desliza para elegir estilo</span>
+                    </div>
+                    <div id="filter-buttons" class="flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-2">
+                        <button type="button" data-filter="none" onclick="applyFilter('none', 'Natural', 'none')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-terracotta text-paper border border-terracotta transition-all">
+                            Natural
+                        </button>
+                        <button type="button" data-filter="golden" onclick="applyFilter('golden', 'Hora Dorada', 'sepia(0.35) saturate(1.4) contrast(1.08) brightness(1.05)')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-charcoal text-paper/85 border border-paper/15 hover:border-paper/40 transition-all">
+                            Hora Dorada
+                        </button>
+                        <button type="button" data-filter="analog" onclick="applyFilter('analog', 'Película Analógica', 'contrast(1.18) saturate(1.25) hue-rotate(-8deg) brightness(1.02)')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-charcoal text-paper/85 border border-paper/15 hover:border-paper/40 transition-all">
+                            Película Analógica
+                        </button>
+                        <button type="button" data-filter="bw" onclick="applyFilter('bw', 'Blanco y Negro', 'grayscale(1) contrast(1.3) brightness(1.02)')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-charcoal text-paper/85 border border-paper/15 hover:border-paper/40 transition-all">
+                            Blanco y Negro
+                        </button>
+                        <button type="button" data-filter="cyanotype" onclick="applyFilter('cyanotype', 'Cianotipo', 'grayscale(1) sepia(0.45) hue-rotate(155deg) saturate(2.2) contrast(1.15)')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-charcoal text-paper/85 border border-paper/15 hover:border-paper/40 transition-all">
+                            Cianotipo
+                        </button>
+                        <button type="button" data-filter="sunset" onclick="applyFilter('sunset', 'Atardecer Cálido', 'sepia(0.45) hue-rotate(-15deg) saturate(1.55) contrast(1.1)')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-charcoal text-paper/85 border border-paper/15 hover:border-paper/40 transition-all">
+                            Atardecer Cálido
+                        </button>
+                        <button type="button" data-filter="editorial" onclick="applyFilter('editorial', 'Contraste Editorial', 'contrast(1.35) saturate(0.85) brightness(0.98)')" class="filter-chip shrink-0 px-4 py-2.5 rounded-2xl text-xs font-bold bg-charcoal text-paper/85 border border-paper/15 hover:border-paper/40 transition-all">
+                            Contraste Editorial
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botón Disparador Principal -->
+                <div class="mt-6 flex flex-col items-center justify-center">
+                    <button type="button" id="btn-capture" onclick="triggerCapture()" disabled class="group relative w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-paper p-1.5 shadow-xl disabled:opacity-40 disabled:cursor-not-allowed transition-transform active:scale-90">
+                        <span class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 border-charcoal bg-paper group-hover:bg-terracotta transition-colors flex items-center justify-center">
+                            <i data-lucide="camera" class="w-6 h-6 text-charcoal group-hover:text-paper transition-colors"></i>
+                        </span>
+                    </button>
+                    <span class="text-xs text-paper/65 mt-2 font-medium">Presiona el obturador para capturar con el filtro elegido</span>
+                </div>
+
+                <!-- Resultado de la Fotografía Capturada -->
+                <div id="capture-result-panel" class="hidden mt-8 pt-6 border-t border-paper/15">
+                    <div class="flex flex-col md:flex-row items-center gap-6 bg-charcoal p-5 sm:p-6 rounded-3xl border border-paper/15 shadow-inner">
+                        <div class="w-full md:w-1/2">
+                            <img id="captured-photo-img" alt="Fotografía capturada en Vivaria" class="w-full rounded-2xl shadow-lg border border-paper/15">
+                        </div>
+                        <div class="w-full md:w-1/2 text-center md:text-left">
+                            <span class="inline-block px-3 py-1 rounded-full bg-sage text-paper text-xs font-bold mb-3">
+                                ¡Captura Lista!
+                            </span>
+                            <h3 class="font-serif text-2xl font-bold mb-2">Tu mirada en Vivaria</h3>
+                            <p id="capture-summary" class="text-paper/75 text-sm leading-relaxed mb-6">
+                                Fotografía procesada con tu filtro seleccionado y sello del club. Descárgala para compartirla en la exposición o con tus amigos.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                                <button type="button" onclick="downloadCapturedPhoto()" class="inline-flex items-center justify-center gap-2 bg-terracotta hover:bg-terracottaDark text-paper font-bold px-6 py-3.5 rounded-2xl shadow-md transition-colors">
+                                    <i data-lucide="download" class="w-4 h-4"></i>
+                                    <span>Descargar Foto</span>
+                                </button>
+                                <button type="button" onclick="discardCapturedPhoto()" class="inline-flex items-center justify-center gap-2 bg-paper/10 hover:bg-paper/20 text-paper font-semibold px-5 py-3.5 rounded-2xl transition-colors">
+                                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                    <span>Tomar otra</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Canvas Oculto para Procesamiento de Imagen y Filtros -->
+    <canvas id="capture-canvas" class="hidden"></canvas>
+
+    <!-- Modal Lightbox para Ampliar Fotos de la Galería -->
+    <div id="gallery-lightbox" onclick="closeLightbox()" class="hidden fixed inset-0 z-50 bg-charcoal/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8">
+        <div onclick="event.stopPropagation()" class="bg-paper text-charcoal max-w-3xl w-full rounded-3xl overflow-hidden shadow-2xl border border-paper/20">
+            <div class="relative bg-charcoal flex items-center justify-center max-h-[68vh] overflow-hidden">
+                <img id="lightbox-img" src="" alt="Vista ampliada" class="w-full h-full max-h-[68vh] object-contain">
+                <button type="button" onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-charcoal/80 text-paper hover:bg-terracotta flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-terracotta">Galería Vivaria</span>
+                    <h3 id="lightbox-title" class="font-serif text-2xl font-bold text-charcoal mt-0.5">Título</h3>
+                    <p id="lightbox-desc" class="text-sm text-charcoal/75 mt-1">Descripción</p>
+                </div>
+                <span class="text-xs font-serif italic text-sage shrink-0">Vemos. Vivimos. Recordamos.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página -->
+    <footer class="bg-paper border-t border-charcoal/10 py-12 px-4 sm:px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2.5 mb-3">
+                <i data-lucide="aperture" class="w-6 h-6 text-terracotta"></i>
+                <span class="font-serif font-bold text-2xl text-charcoal tracking-tight">VIVARIA</span>
+            </div>
+            <p class="font-serif italic text-lg text-sage font-semibold mb-3">Vemos. Vivimos. Recordamos.</p>
+            <p class="text-xs text-charcoal/60">
+                Club Estudiantil de Fotografía, Creatividad y Expresión Visual.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Lógica de la Galería Lightbox, Cámara, Modos y Filtros Creativos -->
+    <script>
+        // Inicializar iconos de Lucide de forma segura cuando el DOM y el script estén listos
+        function initLucideIcons() {
+            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
+        }
+        window.addEventListener('DOMContentLoaded', initLucideIcons);
+        initLucideIcons();
+
+        // Funciones del Lightbox de la Galería
+        function openLightbox(src, title, desc) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-title').textContent = title;
+            document.getElementById('lightbox-desc').textContent = desc;
+            document.getElementById('gallery-lightbox').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('gallery-lightbox').classList.add('hidden');
+        }
+
+        // Variables de estado de la Cámara
+        let currentStream = null;
+        let facingMode = 'user'; // 'user' = frontal (ideal para personas/selfies), 'environment' = trasera (paisajes/objetos)
+        let currentSceneMode = 'personas';
+        let currentFilterKey = 'none';
+        let currentCssFilter = 'none';
+        let currentFilterName = 'Natural';
+        let isGridVisible = false;
+        let isTimerEnabled = false;
+        let usingUploadedImage = false;
+        let lastCapturedDataUrl = '';
+
+        const videoEl = document.getElementById('video-feed');
+        const uploadedPreviewEl = document.getElementById('uploaded-preview');
+        const placeholderEl = document.getElementById('camera-placeholder');
+        const errorBoxEl = document.getElementById('camera-error-box');
+        const btnCapture = document.getElementById('btn-capture');
+        const statusDot = document.getElementById('camera-status-dot');
+        const statusText = document.getElementById('camera-status-text');
+        const activeFilterBadge = document.getElementById('active-filter-badge');
+        const activeFilterNameEl = document.getElementById('active-filter-name');
+        const liveOverlayLayer = document.getElementById('live-overlay-layer');
+
+        // Cambiar Modo de Escena (Personas, Paisajes, Objetos)
+        function setSceneMode(mode) {
+            currentSceneMode = mode;
+
+            // Actualizar botones visuales de modo
+            document.querySelectorAll('.scene-btn').forEach(btn => {
+                btn.classList.remove('bg-terracotta', 'text-paper', 'shadow-md');
+                btn.classList.add('bg-slateDark', 'text-paper/80');
+            });
+            const activeBtn = document.getElementById(`mode-${mode}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slateDark', 'text-paper/80');
+                activeBtn.classList.add('bg-terracotta', 'text-paper', 'shadow-md');
+            }
+
+            const helperText = document.getElementById('mode-helper-text');
+            const guidePortrait = document.getElementById('guide-portrait');
+            const guideObject = document.getElementById('guide-object');
+
+            if (mode === 'personas') {
+                helperText.textContent = 'Ideal para selfies y retratos con luz suave. Activa tu cámara para probar los filtros.';
+                guidePortrait.classList.remove('hidden');
+                guideObject.classList.add('hidden');
+                applyFilter('golden', 'Hora Dorada', 'sepia(0.35) saturate(1.4) contrast(1.08) brightness(1.05)');
+                if (currentStream && facingMode !== 'user') {
+                    facingMode = 'user';
+                    startCamera();
+                }
+            } else if (mode === 'paisajes') {
+                helperText.textContent = 'Realza cielos, montañas y luz natural. Cambia a cámara trasera para capturar exteriores.';
+                guidePortrait.classList.add('hidden');
+                guideObject.classList.add('hidden');
+                applyFilter('analog', 'Película Analógica', 'contrast(1.18) saturate(1.25) hue-rotate(-8deg) brightness(1.02)');
+                if (currentStream && facingMode !== 'environment') {
+                    facingMode = 'environment';
+                    startCamera();
+                }
+            } else if (mode === 'objetos') {
+                helperText.textContent = 'Enmarca objetos, libros o detalles cotidianos con contraste editorial.';
+                guidePortrait.classList.add('hidden');
+                guideObject.classList.remove('hidden');
+                applyFilter('editorial', 'Contraste Editorial', 'contrast(1.35) saturate(0.85) brightness(0.98)');
+                if (currentStream && facingMode !== 'environment') {
+                    facingMode = 'environment';
+                    startCamera();
+                }
+            }
+
+            updateStatusLabel();
+        }
+
+        function updateStatusLabel() {
+            const modeNames = {
+                personas: 'Personas y Selfies',
+                paisajes: 'Paisajes y Cielos',
+                objetos: 'Objetos y Detalles'
+            };
+            const state = currentStream ? 'Cámara activa' : (usingUploadedImage ? 'Imagen cargada' : 'Listo para activar');
+            statusText.textContent = `Modo: ${modeNames[currentSceneMode]} • ${state}`;
+        }
+
+        // Iniciar transmisión de cámara
+        async function startCamera() {
+            stopCameraStream();
+            usingUploadedImage = false;
+            uploadedPreviewEl.classList.add('hidden');
+            errorBoxEl.classList.add('hidden');
+            placeholderEl.classList.add('hidden');
+
+            try {
+                if (!window.isSecureContext) {
+                    throw new Error('La cámara requiere una conexión segura (HTTPS) para funcionar en el navegador. Sube este archivo a un hosting gratuito con HTTPS como Netlify Drop, Vercel o GitHub Pages.');
+                }
+
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error('Tu navegador no soporta acceso directo a la cámara.');
+                }
+
+                const constraints = {
+                    video: {
+                        facingMode: { ideal: facingMode },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                };
+
+                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                videoEl.srcObject = currentStream;
+                videoEl.classList.remove('hidden');
+                liveOverlayLayer.classList.remove('hidden');
+
+                // Espejo solo para cámara frontal (selfies/personas)
+                if (facingMode === 'user') {
+                    videoEl.classList.add('mirror-mode');
+                } else {
+                    videoEl.classList.remove('mirror-mode');
+                }
+
+                btnCapture.disabled = false;
+                statusDot.classList.remove('bg-amberGold', 'bg-terracotta');
+                statusDot.classList.add('bg-emerald-400', 'animate-pulse');
+                activeFilterBadge.classList.remove('hidden');
+                updateStatusLabel();
+
+            } catch (err) {
+                console.warn('Error al iniciar cámara:', err);
+                videoEl.classList.add('hidden');
+                liveOverlayLayer.classList.add('hidden');
+                const errMsgEl = document.getElementById('camera-error-msg');
+                if (errMsgEl && err.message) {
+                    errMsgEl.textContent = err.message;
+                }
+                errorBoxEl.classList.remove('hidden');
+                statusDot.classList.remove('bg-emerald-400', 'animate-pulse');
+                statusDot.classList.add('bg-terracotta');
+                statusText.textContent = 'Cámara bloqueada por falta de HTTPS o permisos';
+            }
+        }
+
+        // Detener cámara activa
+        function stopCameraStream() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+                currentStream = null;
+            }
+        }
+
+        // Cambiar cámara frontal/trasera
+        function switchCamera() {
+            facingMode = (facingMode === 'user') ? 'environment' : 'user';
+            if (currentStream) {
+                startCamera();
+            }
+        }
+
+        // Alternar temporizador de 3 segundos
+        function toggleTimer() {
+            isTimerEnabled = !isTimerEnabled;
+            const label = document.getElementById('timer-label');
+            const btn = document.getElementById('btn-timer');
+            if (isTimerEnabled) {
+                label.textContent = '3s: On';
+                btn.classList.add('bg-terracotta', 'text-paper');
+                btn.classList.remove('bg-paper/10');
+            } else {
+                label.textContent = '3s: Off';
+                btn.classList.remove('bg-terracotta', 'text-paper');
+                btn.classList.add('bg-paper/10');
+            }
+        }
+
+        // Alternar cuadrícula de regla de tercios
+        function toggleGrid() {
+            isGridVisible = !isGridVisible;
+            const grid = document.getElementById('composition-grid');
+            const btn = document.getElementById('btn-grid');
+            if (isGridVisible) {
+                grid.classList.remove('hidden');
+                btn.classList.add('bg-terracotta', 'text-paper');
+                btn.classList.remove('bg-paper/10');
+            } else {
+                grid.classList.add('hidden');
+                btn.classList.remove('bg-terracotta', 'text-paper');
+                btn.classList.add('bg-paper/10');
+            }
+        }
+
+        // Manejar subida de imagen local para aplicar filtros
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                loadGalleryPhotoInStudio(e.target.result, null);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Disparador con soporte para temporizador de 3 segundos
+        function triggerCapture() {
+            if (!currentStream && !usingUploadedImage) return;
+
+            if (!isTimerEnabled) {
+                capturePhoto();
+                return;
+            }
+
+            const countdownOverlay = document.getElementById('countdown-overlay');
+            const countdownNumber = document.getElementById('countdown-number');
+            let count = 3;
+            countdownNumber.textContent = count;
+            countdownOverlay.classList.remove('hidden');
+            btnCapture.disabled = true;
+
+            const interval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownNumber.textContent = count;
+                } else {
+                    clearInterval(interval);
+                    countdownOverlay.classList.add('hidden');
+                    btnCapture.disabled = false;
+                    capturePhoto();
+                }
+            }, 1000);
+        }
+
+        // Cargar una foto de la galería directamente en el estudio de filtros
+        function loadGalleryPhotoInStudio(imageSrc, recommendedMode) {
+            stopCameraStream();
+            if (recommendedMode) {
+                setSceneMode(recommendedMode);
+            }
+            usingUploadedImage = true;
+            videoEl.classList.add('hidden');
+            placeholderEl.classList.add('hidden');
+            errorBoxEl.classList.add('hidden');
+
+            uploadedPreviewEl.src = imageSrc;
+            uploadedPreviewEl.classList.remove('hidden');
+            liveOverlayLayer.classList.remove('hidden');
+            uploadedPreviewEl.style.filter = currentCssFilter;
+
+            btnCapture.disabled = false;
+            statusDot.classList.remove('bg-amberGold', 'bg-terracotta');
+            statusDot.classList.add('bg-emerald-400');
+            activeFilterBadge.classList.remove('hidden');
+            updateStatusLabel();
+
+            document.getElementById('camara-vivaria').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Aplicar los 7 filtros originales
+        function applyFilter(filterKey, filterName, cssFilterValue) {
+            currentFilterKey = filterKey;
+            currentCssFilter = cssFilterValue;
+            currentFilterName = filterName;
+
+            videoEl.style.filter = cssFilterValue;
+            uploadedPreviewEl.style.filter = cssFilterValue;
+            activeFilterNameEl.textContent = filterName;
+
+            // Actualizar estado visual de botones de filtro
+            const chips = document.querySelectorAll('.filter-chip');
+            chips.forEach(chip => {
+                if (chip.getAttribute('data-filter') === filterKey) {
+                    chip.classList.remove('bg-charcoal', 'text-paper/85', 'border-paper/15');
+                    chip.classList.add('bg-terracotta', 'text-paper', 'border-terracotta');
+                } else {
+                    chip.classList.remove('bg-terracotta', 'text-paper', 'border-terracotta');
+                    chip.classList.add('bg-charcoal', 'text-paper/85', 'border-paper/15');
+                }
+            });
+        }
+
+        // Capturar fotografía con filtro aplicado
+        function capturePhoto() {
+            const canvas = document.getElementById('capture-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Efecto visual de flash
+            const flashEl = document.getElementById('shutter-flash');
+            flashEl.classList.remove('flash-active');
+            void flashEl.offsetWidth;
+            flashEl.classList.add('flash-active');
+
+            let sourceWidth = 0;
+            let sourceHeight = 0;
+
+            if (currentStream && !usingUploadedImage) {
+                sourceWidth = videoEl.videoWidth || 1280;
+                sourceHeight = videoEl.videoHeight || 720;
+            } else if (usingUploadedImage) {
+                sourceWidth = uploadedPreviewEl.naturalWidth || 1280;
+                sourceHeight = uploadedPreviewEl.naturalHeight || 720;
+            } else {
+                return;
+            }
+
+            canvas.width = sourceWidth;
+            canvas.height = sourceHeight;
+
+            ctx.save();
+            ctx.filter = currentCssFilter;
+
+            if (currentStream && !usingUploadedImage && facingMode === 'user') {
+                ctx.translate(sourceWidth, 0);
+                ctx.scale(-1, 1);
+                ctx.drawImage(videoEl, 0, 0, sourceWidth, sourceHeight);
+            } else if (currentStream && !usingUploadedImage) {
+                ctx.drawImage(videoEl, 0, 0, sourceWidth, sourceHeight);
+            } else {
+                ctx.drawImage(uploadedPreviewEl, 0, 0, sourceWidth, sourceHeight);
+            }
+            ctx.restore();
+
+            // Sello editorial sutil de Vivaria
+            const fontSize = Math.max(15, Math.round(sourceWidth * 0.022));
+            ctx.fillStyle = 'rgba(250, 246, 239, 0.88)';
+            ctx.font = `600 ${fontSize}px sans-serif`;
+            ctx.textAlign = 'right';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+            ctx.shadowBlur = 6;
+            ctx.fillText(`VIVARIA • ${currentFilterName}`, canvas.width - 24, canvas.height - 20);
+
+            try {
+                lastCapturedDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+                const resultPanel = document.getElementById('capture-result-panel');
+                const capturedImg = document.getElementById('captured-photo-img');
+                capturedImg.src = lastCapturedDataUrl;
+                resultPanel.classList.remove('hidden');
+                resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (err) {
+                console.warn('Error al exportar captura:', err);
+            }
+        }
+
+        // Dibujar destello de 4 puntas en Canvas
+        function drawSparkle(ctx, cx, cy, radius, color) {
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - radius);
+            ctx.quadraticCurveTo(cx, cy, cx + radius, cy);
+            ctx.quadraticCurveTo(cx, cy, cx, cy + radius);
+            ctx.quadraticCurveTo(cx, cy, cx - radius, cy);
+            ctx.quadraticCurveTo(cx, cy, cx, cy - radius);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Descargar fotografía capturada
+        function downloadCapturedPhoto() {
+            if (!lastCapturedDataUrl) return;
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+            link.download = `vivaria-${currentSceneMode}-${timestamp}.jpg`;
+            link.href = lastCapturedDataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Ocultar resultado para tomar otra foto
+        function discardCapturedPhoto() {
+            document.getElementById('capture-result-panel').classList.add('hidden');
+        }
+
+        // Limpiar recursos al cerrar la página
+        window.addEventListener('beforeunload', stopCameraStream);
+
+        // Verificar protocolo HTTPS al cargar la página para informar al usuario
+        window.addEventListener('DOMContentLoaded', () => {
+            const badge = document.getElementById('https-badge');
+            const badgeText = document.getElementById('https-badge-text');
+            if (!window.isSecureContext && badge && badgeText) {
+                badge.classList.remove('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-400/30');
+                badge.classList.add('bg-amberGold/20', 'text-amberGold', 'border-amberGold/30');
+                badgeText.textContent = 'Requiere HTTPS';
+            }
+        });
+    </script>
+</body>
+</html>
